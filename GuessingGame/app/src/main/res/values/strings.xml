@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Guessing Game</string>
+
+    <string name="valid">The number should between 0 and 100</string>
 </resources>
