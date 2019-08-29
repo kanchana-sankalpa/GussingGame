@@ -1,5 +1,6 @@
 package com.example.guessinggame;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +16,13 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button guess,quit;
+    Button guess, quit;
     EditText number;
     private static final Random rand = new Random();
-    TextView generated,correct,guessed,attempt;
-    LinearLayout evaluate,no_of_attempts;
-    int attemptno,quitn;
+    TextView generated, correct, guessed, attempt;
+    LinearLayout evaluate, no_of_attempts;
+    int attemptno = 0, quitn;
+    int randInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,19 +48,46 @@ public class MainActivity extends AppCompatActivity {
 
                 String input = number.getText().toString();
 
-                if(InputValidation.input(Integer.parseInt(input))){
-                    evaluate.setVisibility(View.VISIBLE);
-                }else{
-                    Toast.makeText(MainActivity.this,"Please input a number",Toast.LENGTH_SHORT).show();
+                if (InputValidation.input(Integer.parseInt(input))) {
+                         randInt = rand.nextInt(99)+1;
+
+                    if (InputEvaluation.evaluate(Integer.parseInt(input), randInt)) {
+
+                        displayResult(Integer.parseInt(input), randInt, attemptno, true);
+
+                    } else {
+                        displayResult(Integer.parseInt(input), randInt, attemptno, false);
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Please input a number between 0-100", Toast.LENGTH_SHORT).show();
                     evaluate.setVisibility(View.GONE);
                 }
 
 
-                }
+            }
         });
 
 
+    }
+
+        @SuppressLint({"NewApi", "SetTextI18n"})
+        public void displayResult(int input, int rand, int attemptno, boolean result){
+
+            evaluate.setVisibility(View.VISIBLE);
+            generated.setText(String.valueOf(rand));
+        attempt.setText("" + attemptno);
+        guessed.setText(Integer.toString(input));
+
+        if(result){
+            correct.setText(getText(R.string.correct));
+            correct.setTextColor(getColor(R.color.green));
+        }else{
+            correct.setText(getText(R.string.wrong));
+            correct.setTextColor(getColor(R.color.red));
         }
+
+
+    }
 
 
 }
