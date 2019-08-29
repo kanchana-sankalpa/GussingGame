@@ -28,24 +28,24 @@ public class MainActivityTest {
 
     @Test(expected = RuntimeException.class)
     public void wheninputis0() {
-        MainActivity.input(0);
+        InputValidation.input(0);
     }
 
     @Test
     public void wheninputisbetweenoto100() {
-        MainActivity.input(50);
+        InputValidation.input(50);
         Assert.assertTrue(true);
     }
 
     @Test(expected = RuntimeException.class)
     public void wheninputisorabove100() {
-        MainActivity.input(100);
+        InputValidation.input(100);
 
     }
 
     @Test(expected = RuntimeException.class)
     public void wheninputisempty() {
-        Assert.assertEquals(0, MainActivity.input(Integer.parseInt("")));
+        Assert.assertEquals(0, InputValidation.input(Integer.parseInt("")));
 
     }
 
