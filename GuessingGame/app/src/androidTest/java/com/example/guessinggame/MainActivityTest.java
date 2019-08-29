@@ -32,7 +32,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void wheninputisbetweenoto100() {
+    public void wheninputisbetween0to100() {
         InputValidation.input(50);
         Assert.assertTrue(true);
     }
