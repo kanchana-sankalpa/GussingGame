@@ -4,6 +4,7 @@ package com.example.guessinggame;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.IdlingPolicies;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -14,15 +15,22 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withInputType;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.*;
 
 import com.example.guessinggame.MainActivity;
+
+import java.util.concurrent.TimeUnit;
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -106,16 +114,68 @@ public class MainActivityTest {
 
     // 4.1
     @Test
-    public void attemptnumber() {
+    public void attemptnumberdisplaywhencorrectguess() {
 
 
         mActivityRule.getActivity().randInt = 50;
-        onView(withId(R.id.number)).perform(typeText(String.valueOf(50)));
+        onView(withId(R.id.number)).perform(typeText(String.valueOf(10)));
+        onView(withId(R.id.guess)).perform(click());
+
+        mActivityRule.getActivity().randInt = 50;
+        onView(withId(R.id.number)).perform(replaceText(String.valueOf(50)));
         onView(withId(R.id.guess)).perform(click());
 
 
-        onView(mActivityRule.getActivity().attemptno)
+        onView(withId(R.id.attempt_no)).check(matches(withText("2")));
+
+    }
+
+    // 4.2
+    @Test
+    public void attemptnumberdisplaywhenquit() {
+
+
+        mActivityRule.getActivity().randInt = 50;
+        onView(withId(R.id.number)).perform(replaceText(String.valueOf(10)));
+        onView(withId(R.id.guess)).perform(click());
+
+        onView(withId(R.id.quit)).perform(click());
+        onView(withId(R.id.attempt_no)).check(matches(withText("1")));
+
     }
 
 
+
+
+    // 5.1
+    @Test
+    public void guessbuttondisablewhencorrectguess() {
+
+        mActivityRule.getActivity().randInt = 50;
+        onView(withId(R.id.number)).perform(replaceText(String.valueOf(50)));
+        onView(withId(R.id.guess)).perform(click());
+        IdlingPolicies.setMasterPolicyTimeout(10, TimeUnit.SECONDS);
+        onView(withId(R.id.guess)).check(matches(not(isClickable())));
+
+    }
+
+
+    // 5.2
+    @Test
+    public void guessbuttondisablewhenquit() {
+
+        onView(withId(R.id.quit)).perform(click());
+        onView(withId(R.id.guess)).check(matches(not(isClickable())));
+
+    }
+
+    // 6
+    @Test
+    public void applicationclosewhenclickquittwice() {
+
+        onView(withId(R.id.quit)).perform(click());
+        onView(withId(R.id.quit)).perform(click());
+
+        assertTrue(mActivityRule.getActivity().isFinishing());
+    }
 }

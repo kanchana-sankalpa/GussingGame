@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private static final Random rand = new Random();
     TextView generated, correct, guessed, attempt;
     LinearLayout evaluate, no_of_attempts;
-    int attemptno = 0, quitn;
+    int attemptno = 0, quitn = 0;
     int randInt;
 
     @Override
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         evaluate = findViewById(R.id.evaluate);
         guessed = findViewById(R.id.guessed);
         evaluate.setVisibility(View.GONE);
-        attempt = findViewById(R.id.attempt);
+        attempt = findViewById(R.id.attempt_no);
         no_of_attempts = findViewById(R.id.no_of_attempts);
 
 
@@ -46,15 +46,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                setAttempt();
+
                 String input = number.getText().toString();
 
                 if (InputValidation.input(Integer.parseInt(input))) {
-                         randInt = rand.nextInt(99)+1;
+                   //      randInt = rand.nextInt(99)+1;
 
                     if (InputEvaluation.evaluate(Integer.parseInt(input), randInt)) {
 
                         displayResult(Integer.parseInt(input), randInt, attemptno, true);
-
+                       no_of_attempts.setVisibility(View.VISIBLE);
+                       guess.setClickable(false);
                     } else {
                         displayResult(Integer.parseInt(input), randInt, attemptno, false);
                     }
@@ -65,12 +68,31 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
+
+
         });
 
+        quit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guess.setClickable(false);
+                attempt.setText(""+attemptno);
+                if(quitn==0) {
+                    Toast.makeText(MainActivity.this, "Click again to close application", Toast.LENGTH_SHORT).show();
+                    no_of_attempts.setVisibility(View.VISIBLE);
+                    quitn++;
+                }else{
+                    finish();
+                }
+            }
+        });
 
     }
 
-        @SuppressLint({"NewApi", "SetTextI18n"})
+
+
+
+    @SuppressLint({"NewApi", "SetTextI18n"})
         public void displayResult(int input, int rand, int attemptno, boolean result){
 
             evaluate.setVisibility(View.VISIBLE);
@@ -85,8 +107,12 @@ public class MainActivity extends AppCompatActivity {
             correct.setText(getText(R.string.wrong));
             correct.setTextColor(getColor(R.color.red));
         }
+    }
 
-
+    @SuppressLint("SetTextI18n")
+    public void setAttempt(){
+        attemptno++;
+        attempt.setText(""+attemptno);
     }
 
 
