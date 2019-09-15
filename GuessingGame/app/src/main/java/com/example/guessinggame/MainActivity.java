@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 attempt.setText(""+attemptno);
                 if(quitn==0) {
                     Toast.makeText(MainActivity.this, "Click again to close application", Toast.LENGTH_SHORT).show();
-                    no_of_attempts.setVisibility(View.VISIBLE);
+                     no_of_attempts.setVisibility(View.VISIBLE);
                     quitn++;
                 }else{
                     finish();
@@ -94,9 +94,8 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint({"NewApi", "SetTextI18n"})
         public void displayResult(int input, int rand, int attemptno, boolean result){
-
-            evaluate.setVisibility(View.VISIBLE);
-            generated.setText(String.valueOf(rand));
+        evaluate.setVisibility(View.VISIBLE);
+        generated.setText(String.valueOf(rand));
         attempt.setText("" + attemptno);
         guessed.setText(Integer.toString(input));
 
@@ -107,13 +106,24 @@ public class MainActivity extends AppCompatActivity {
             correct.setText(getText(R.string.wrong));
             correct.setTextColor(getColor(R.color.red));
         }
+
     }
+
+    /*
+
+
+
+
+     */
 
     @SuppressLint("SetTextI18n")
     public void setAttempt(){
         attemptno++;
         attempt.setText(""+attemptno);
+
     }
 
+/*
 
+ */
 }

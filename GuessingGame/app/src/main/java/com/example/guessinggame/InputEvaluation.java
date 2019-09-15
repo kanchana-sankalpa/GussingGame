@@ -7,8 +7,9 @@ public class InputEvaluation {
         if(input == random) {
             return true;
         } else{
-                return false;
-            }
+            return false;
+        }
+
     }
 
 }

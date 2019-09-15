@@ -8,10 +8,16 @@ import android.support.test.espresso.IdlingPolicies;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+
 import org.junit.Assert;
 import org.junit.Rule;
+
+import org.junit.runners.MethodSorters;
+import org.junit.FixMethodOrder;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -31,6 +37,10 @@ import com.example.guessinggame.MainActivity;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.hamcrest.core.StringContains.containsString;
+
+
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -38,6 +48,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MainActivityTest {
 
     @Rule
@@ -49,32 +60,38 @@ public class MainActivityTest {
     public void wheninputis0() {
         Assert.assertEquals(false, InputValidation.input(0));
     }
-
     // 1.2
     @Test
-    public void wheninputisbetween0to100() {
+    public void wheninputis1() {
+        Assert.assertEquals(false, InputValidation.input(1));
+    }
+    // 1.3
+    @Test
+    public void wheninputisbetween1to100() {
         InputValidation.input(50);
         Assert.assertTrue(true);
     }
-
-    // 1.3
+    // 1.4
     @Test
     public void wheninputisorabove100() {
         Assert.assertFalse(InputValidation.input(100));
-
     }
-
-    // 1.4
+    // 1.5
+    @Test(expected = RuntimeException.class)
+    public void wheninputisstring() {
+        Assert.assertEquals(false, InputValidation.input(Integer.parseInt("test")));
+    }
+    // 1.6
     @Test(expected = RuntimeException.class)
     public void wheninputisempty() {
         Assert.assertEquals(false, InputValidation.input(Integer.parseInt("")));
-
     }
+
+
 
     // 2.1
     @Test
     public void inputevaluationwrongguess() {
-
         Assert.assertFalse(InputEvaluation.evaluate(10, 50));
 
     }
@@ -82,34 +99,26 @@ public class MainActivityTest {
     // 2.2
     @Test
     public void inputevaluationcorrectguess() {
-
         Assert.assertTrue(InputEvaluation.evaluate(50, 50));
-
 
     }
 
     // 3.1
     @Test
     public void displaywrongresult() {
-
-
         mActivityRule.getActivity().randInt = 50;
         onView(withId(R.id.number)).perform(typeText(String.valueOf(10)));
         onView(withId(R.id.guess)).perform(click());
         onView(withId(R.id.correct)).check(matches(withText(R.string.wrong)));
-
     }
 
     // 3.2
     @Test
     public void displaycorrectresult() {
-
-
         mActivityRule.getActivity().randInt = 50;
         onView(withId(R.id.number)).perform(typeText(String.valueOf(50)));
         onView(withId(R.id.guess)).perform(click());
         onView(withId(R.id.correct)).check(matches(withText(R.string.correct)));
-
     }
 
     // 4.1
@@ -144,7 +153,7 @@ public class MainActivityTest {
 
     }
 
-
+/*
 
 
     // 5.1
@@ -178,4 +187,7 @@ public class MainActivityTest {
 
         assertTrue(mActivityRule.getActivity().isFinishing());
     }
+
+
+ */
 }
