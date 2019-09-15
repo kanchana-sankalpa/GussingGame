@@ -107,18 +107,18 @@ public class MainActivityTest {
     @Test
     public void displaywrongresult() {
         mActivityRule.getActivity().randInt = 50;
-        onView(withId(R.id.number)).perform(typeText(String.valueOf(10)));
-        onView(withId(R.id.guess)).perform(click());
-        onView(withId(R.id.correct)).check(matches(withText(R.string.wrong)));
+        onView(withId(R.id.editTxtGuessedNumber)).perform(typeText(String.valueOf(10)));
+        onView(withId(R.id.btnGuess)).perform(click());
+        onView(withId(R.id.txtViewDecision)).check(matches(withText(R.string.wrong)));
     }
 
     // 3.2
     @Test
     public void displaycorrectresult() {
         mActivityRule.getActivity().randInt = 50;
-        onView(withId(R.id.number)).perform(typeText(String.valueOf(50)));
-        onView(withId(R.id.guess)).perform(click());
-        onView(withId(R.id.correct)).check(matches(withText(R.string.correct)));
+        onView(withId(R.id.editTxtGuessedNumber)).perform(typeText(String.valueOf(50)));
+        onView(withId(R.id.btnGuess)).perform(click());
+        onView(withId(R.id.txtViewDecision)).check(matches(withText(R.string.correct)));
     }
 
     // 4.1
@@ -127,15 +127,15 @@ public class MainActivityTest {
 
 
         mActivityRule.getActivity().randInt = 50;
-        onView(withId(R.id.number)).perform(typeText(String.valueOf(10)));
-        onView(withId(R.id.guess)).perform(click());
+        onView(withId(R.id.editTxtGuessedNumber)).perform(typeText(String.valueOf(10)));
+        onView(withId(R.id.btnGuess)).perform(click());
 
         mActivityRule.getActivity().randInt = 50;
-        onView(withId(R.id.number)).perform(replaceText(String.valueOf(50)));
-        onView(withId(R.id.guess)).perform(click());
+        onView(withId(R.id.editTxtGuessedNumber)).perform(replaceText(String.valueOf(50)));
+        onView(withId(R.id.btnGuess)).perform(click());
 
 
-        onView(withId(R.id.attempt_no)).check(matches(withText("2")));
+        onView(withId(R.id.txtViewNumberOfAttempts)).check(matches(withText("2")));
 
     }
 
@@ -145,15 +145,14 @@ public class MainActivityTest {
 
 
         mActivityRule.getActivity().randInt = 50;
-        onView(withId(R.id.number)).perform(replaceText(String.valueOf(10)));
-        onView(withId(R.id.guess)).perform(click());
+        onView(withId(R.id.editTxtGuessedNumber)).perform(replaceText(String.valueOf(10)));
+        onView(withId(R.id.btnGuess)).perform(click());
 
-        onView(withId(R.id.quit)).perform(click());
-        onView(withId(R.id.attempt_no)).check(matches(withText("1")));
+        onView(withId(R.id.btnQuit)).perform(click());
+        onView(withId(R.id.txtViewNumberOfAttempts)).check(matches(withText("1")));
 
     }
 
-/*
 
 
     // 5.1
@@ -161,10 +160,10 @@ public class MainActivityTest {
     public void guessbuttondisablewhencorrectguess() {
 
         mActivityRule.getActivity().randInt = 50;
-        onView(withId(R.id.number)).perform(replaceText(String.valueOf(50)));
-        onView(withId(R.id.guess)).perform(click());
+        onView(withId(R.id.editTxtGuessedNumber)).perform(replaceText(String.valueOf(50)));
+        onView(withId(R.id.btnGuess)).perform(click());
         IdlingPolicies.setMasterPolicyTimeout(10, TimeUnit.SECONDS);
-        onView(withId(R.id.guess)).check(matches(not(isClickable())));
+        onView(withId(R.id.btnGuess)).check(matches(not(isClickable())));
 
     }
 
@@ -173,8 +172,9 @@ public class MainActivityTest {
     @Test
     public void guessbuttondisablewhenquit() {
 
-        onView(withId(R.id.quit)).perform(click());
-        onView(withId(R.id.guess)).check(matches(not(isClickable())));
+        onView(withId(R.id.btnQuit)).perform(click());
+        onView(withId(R.id.btnGuess)).check(matches(not(isClickable())));
+        onView(withId(R.id.btnGuess)).check(matches(not(isClickable())));
 
     }
 
@@ -182,12 +182,12 @@ public class MainActivityTest {
     @Test
     public void applicationclosewhenclickquittwice() {
 
-        onView(withId(R.id.quit)).perform(click());
-        onView(withId(R.id.quit)).perform(click());
+        onView(withId(R.id.btnQuit)).perform(click());
+        onView(withId(R.id.btnQuit)).perform(click());
 
         assertTrue(mActivityRule.getActivity().isFinishing());
     }
 
 
- */
+
 }

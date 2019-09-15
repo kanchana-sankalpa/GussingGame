@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/number"
+        android:id="@+id/editTxtGuessedNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -54,7 +54,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/guess"
+            android:id="@+id/btnGuess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -62,7 +62,7 @@
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/quit"
+            android:id="@+id/btnQuit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -116,7 +116,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/guessed"
+                android:id="@+id/txtViewGuessed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -150,7 +150,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/generated"
+                android:id="@+id/txtViewGeneratred"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -170,7 +170,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/correct"
+                android:id="@+id/txtViewDecision"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
@@ -209,7 +209,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/attempt_no"
+            android:id="@+id/txtViewNumberOfAttempts"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

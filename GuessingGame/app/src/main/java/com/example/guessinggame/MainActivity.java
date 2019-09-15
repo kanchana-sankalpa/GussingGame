@@ -16,12 +16,12 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button guess, quit;
-    EditText number;
+    Button btnGuess, btnQuit;
+    EditText editTxtGuessedNumber;
     private static final Random rand = new Random();
-    TextView generated, correct, guessed, attempt;
+    TextView txtViewGeneratred, txtViewDecision, txtViewGuessed, txtViewNumberOfAttempts;
     LinearLayout evaluate, no_of_attempts;
-    int attemptno = 0, quitn = 0;
+    int numberOfAttempts = 0, numberOfQuitClicked = 0;
     int randInt;
 
     @Override
@@ -29,37 +29,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        guess = findViewById(R.id.guess);
-        quit = findViewById(R.id.quit);
-        number = findViewById(R.id.number);
-        generated = findViewById(R.id.generated);
-        correct = findViewById(R.id.correct);
+        btnGuess = findViewById(R.id.btnGuess);
+        btnQuit = findViewById(R.id.btnQuit);
+        editTxtGuessedNumber = findViewById(R.id.editTxtGuessedNumber);
+        txtViewGeneratred = findViewById(R.id.txtViewGeneratred);
+        txtViewDecision = findViewById(R.id.txtViewDecision);
         evaluate = findViewById(R.id.evaluate);
-        guessed = findViewById(R.id.guessed);
+        txtViewGuessed = findViewById(R.id.txtViewGuessed);
         evaluate.setVisibility(View.GONE);
-        attempt = findViewById(R.id.attempt_no);
+        txtViewNumberOfAttempts = findViewById(R.id.txtViewNumberOfAttempts);
         no_of_attempts = findViewById(R.id.no_of_attempts);
 
 
-        guess.setOnClickListener(new View.OnClickListener() {
+        btnGuess.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
 
                 setAttempt();
 
-                String input = number.getText().toString();
+                String input = editTxtGuessedNumber.getText().toString();
 
                 if (InputValidation.input(Integer.parseInt(input))) {
                    //      randInt = rand.nextInt(99)+1;
 
                     if (InputEvaluation.evaluate(Integer.parseInt(input), randInt)) {
 
-                        displayResult(Integer.parseInt(input), randInt, attemptno, true);
+                        displayResult(Integer.parseInt(input), randInt, numberOfQuitClicked, true);
                        no_of_attempts.setVisibility(View.VISIBLE);
-                       guess.setClickable(false);
+                        btnGuess.setClickable(false);
                     } else {
-                        displayResult(Integer.parseInt(input), randInt, attemptno, false);
+                        displayResult(Integer.parseInt(input), randInt, numberOfQuitClicked, false);
                     }
                 } else {
                     Toast.makeText(MainActivity.this, "Please input a number between 0-100", Toast.LENGTH_SHORT).show();
@@ -72,15 +72,15 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        quit.setOnClickListener(new View.OnClickListener() {
+        btnQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                guess.setClickable(false);
-                attempt.setText(""+attemptno);
-                if(quitn==0) {
+                btnGuess.setClickable(false);
+                txtViewNumberOfAttempts.setText(""+numberOfAttempts);
+                if(numberOfQuitClicked==0) {
                     Toast.makeText(MainActivity.this, "Click again to close application", Toast.LENGTH_SHORT).show();
                      no_of_attempts.setVisibility(View.VISIBLE);
-                    quitn++;
+                    numberOfQuitClicked++;
                 }else{
                     finish();
                 }
@@ -95,16 +95,16 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint({"NewApi", "SetTextI18n"})
         public void displayResult(int input, int rand, int attemptno, boolean result){
         evaluate.setVisibility(View.VISIBLE);
-        generated.setText(String.valueOf(rand));
-        attempt.setText("" + attemptno);
-        guessed.setText(Integer.toString(input));
+        txtViewGeneratred.setText(String.valueOf(rand));
+        txtViewNumberOfAttempts.setText("" + attemptno);
+        txtViewGuessed.setText(Integer.toString(input));
 
         if(result){
-            correct.setText(getText(R.string.correct));
-            correct.setTextColor(getColor(R.color.green));
+            txtViewDecision.setText(getText(R.string.correct));
+            txtViewDecision.setTextColor(getColor(R.color.green));
         }else{
-            correct.setText(getText(R.string.wrong));
-            correct.setTextColor(getColor(R.color.red));
+            txtViewDecision.setText(getText(R.string.wrong));
+            txtViewDecision.setTextColor(getColor(R.color.red));
         }
 
     }
@@ -118,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void setAttempt(){
-        attemptno++;
-        attempt.setText(""+attemptno);
+        numberOfAttempts++;
+        txtViewNumberOfAttempts.setText(""+numberOfAttempts);
 
     }
 
